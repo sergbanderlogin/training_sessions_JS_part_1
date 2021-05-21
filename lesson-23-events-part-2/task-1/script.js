@@ -1,5 +1,5 @@
 'use strict';
-console.log('--- Events in JavaScript. Part-2 ---');
+console.log('--- Events in JavaScript. Part-2. Task-1. ---');
 console.log('              ---------');
 
 const emailInputElem = document.querySelector('#email');
@@ -15,23 +15,6 @@ const isRequired = value => value
 const isEmail = value => value.includes('@')
     ? undefined
     : 'Should be an email';
-/*
-const onEmailChange = event => {
-    const errorText = [isRequired, isEmail]
-        .map(validator => validator(event.target.value))
-        .filter(errorText => errorText)
-        .join(', ')
-    emailErrorElem.textContent = errorText;
-}
-
-const onPasswordChange = event => {
-    const errorText = [isRequired]
-        .map(validator => validator(event.target.value))
-        .filter(errorText => errorText)
-        .join(', ')
-    passwordErrorElem.textContent = errorText;
-}
-*/
 
 const validatorsByField = {
     email: [isRequired, isEmail],
@@ -43,18 +26,27 @@ const validate = (fieldName, value) => {
     return validators
         .map(validator => validator(value))
         .filter(errorText => errorText)
-        .join(', ')
+        .join(', ');
 };
+// ========
+// const onEmailChange = event => {
+//     const errorText = validate('email', event.target.value);
+//     emailErrorElem.textContent = errorText;
+// }
+
+// const onPasswordChange = event => {
+//     const errorText = validate('password', event.target.value)
+//     passwordErrorElem.textContent = errorText;
+// }
 
 const onEmailChange = event => {
-    const errorText = validate('email', event.target.value);
-    emailErrorElem.textContent = errorText;
+    emailErrorElem.textContent = validate('email', event.target.value);
 }
 
 const onPasswordChange = event => {
-    const errorText = validate('password', event.target.value);
-    passwordErrorElem.textContent = errorText;
+    passwordErrorElem.textContent = validate('password', event.target.value);
 }
+// ========
 
 emailInputElem.addEventListener('input', onEmailChange);
 passwordInputElem.addEventListener('input', onPasswordChange);
@@ -64,9 +56,9 @@ const formElem = document.querySelector('.login-form');
 const onFormSubmit = event => {
     event.preventDefault();
     const formData = [...new FormData(formElem)]
-        .reduce((acc, [field, value]) => ({...acc, [field]: value}), {});
+        .reduce((acc, [field, value]) => ({ ...acc, [field]: value}), {});
 
     alert(JSON.stringify(formData));
-}
+};
 
 formElem.addEventListener('submit', onFormSubmit);
